@@ -5,11 +5,10 @@ import Nav from './Nav';
 import ManufacturersList from './ManufacturersList';
 import ManufacturerForm from './ManufacturerForm';
 import VehicleModelsList from './VehicleModelsList';
-
-// inventory
 import AutomobileList from './AutomobileList';
 import AutomobileForm from './AutomobileForm';
 import VehicleModelForm from './VehicleModelForm';
+import SalespersonList from './SalespersonList';
 
 
 function App() {
@@ -25,6 +24,7 @@ function App() {
           <Route path="vehiclemodels/new" element={<VehicleModelForm />} />
           <Route path="automobiles/list" element={<AutomobileList />} />
           <Route path="automobiles/new" element={<AutomobileForm />} />
+          <Route path="salespeople/" element={<SalespersonList />} />
         </Routes>
       </div>
     </BrowserRouter>
