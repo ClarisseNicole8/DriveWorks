@@ -36,7 +36,7 @@ function VehicleModelsList() {
                             <tr key={model.id}>
                                 <td>{ model.name }</td>
                                 <td>{ model.manufacturer.name }</td>
-                                <td><img className=".img-thumbnail" src={model.picture_url} alt="Model" /></td>
+                                <td><img className="rounded float-right" width="275" height="150" src={model.picture_url} alt="Model" /></td>
                             </tr>
                         )
                     })}
