@@ -51,3 +51,27 @@ def api_delete_salesperson(request, pk):
         return JsonResponse({"deleted": count > 0})
     else:
         pass
+
+
+@require_http_methods(["GET", "POST"])
+def api_list_customers(request):
+    if request.method == "GET":
+        customers = Customer.objects.all()
+        return JsonResponse(
+            {"customers": customers},
+            encoder=CustomerEncoder,
+        )
+    else:
+        content = json.loads(request.body)
+        try:
+            customer = Customer.objects.create(**content)
+            return JsonResponse(
+                customer,
+                encoder=CustomerEncoder,
+                safe=False,
+            )
+        except Customer.DoesNotExist:
+            return JsonResponse(
+                {"message": "Could not create customer"},
+                status=400,
+            )

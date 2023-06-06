@@ -3,6 +3,7 @@ from .views import (
     api_list_automobileVOs,
     api_list_salespeople,
     api_delete_salesperson,
+    api_list_customers,
 )
 
 
@@ -22,5 +23,11 @@ urlpatterns = [
         "salespeople/<int:pk>/",
         api_delete_salesperson,
         name="api_delete_salesperson",
-        )
+        ),
+
+    path(
+        "customers/",
+        api_list_customers,
+        name="api_list_customers",
+    )
 ]

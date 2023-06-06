@@ -20,6 +20,8 @@ function SalespersonList () {
     }, []);
 
     return (
+        <div>
+        <h1>Salespeople</h1>
         <table className="table table-striped">
             <thead>
                 <tr>
@@ -40,6 +42,7 @@ function SalespersonList () {
                 })}
             </tbody>
         </table>
+        </div>
     );
 }
 
