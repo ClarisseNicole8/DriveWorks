@@ -31,6 +31,12 @@ function Nav() {
             <li className="nav-item">
               <NavLink className="nav-link" to="/automobiles/new">Create an Automobile</NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/salespeople">Salespeople</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/salespeople/new">Create a Salesperson</NavLink>
+            </li>
           </ul>
         </div>
       </div>
@@ -39,4 +45,3 @@ function Nav() {
 }
 
 export default Nav;
-
