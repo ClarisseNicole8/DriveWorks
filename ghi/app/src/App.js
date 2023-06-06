@@ -3,7 +3,7 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import ManufacturersList from './ManufacturersList';
 import ManufacturerForm from './ManufacturerForm';
-import VehicleModelsList from './VehicleModels';
+import VehicleModelsList from './VehicleModelsList';
 
 
 function App() {
