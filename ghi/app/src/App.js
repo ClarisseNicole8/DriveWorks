@@ -5,6 +5,7 @@ import Nav from './Nav';
 // inventory
 import AutomobileList from './AutomobileList';
 import AutomobileForm from './AutomobileForm';
+import VehicleModelForm from './VehicleModelForm';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
+            <Route path="vehiclemodels/new" element={<VehicleModelForm />} />
             <Route path="automobiles/list" element={<AutomobileList />} />
             <Route path="automobiles/new" element={<AutomobileForm />} />
         </Routes>

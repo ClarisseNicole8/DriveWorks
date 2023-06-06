@@ -80,22 +80,18 @@ export default function AutomobileForm() {
                     <input onChange={handleVinChange} value={vin} placeholder="Vin" required type="text" name="vin" id="vin" className="form-control"/>
                     <label htmlFor="vin">VIN</label>
                 </div>
-                <div className="form-floating mb-3">
-                    <input onChange={handleModelChange} value={models} placeholder="Model" required type="text" name="model" id="model" className="form-control"/>
-                    <label htmlFor="model">Choose a model</label>
-                </div>
-                {/* <div className="mb-3">
-                    <select required onChange={handleBinChange} name="bin" id="bin" className="form-select" value={bin} >
-                        <option value="">Choose a bin</option>
-                        {bins.map(bin => {
+                <div className="mb-3">
+                    <select required onChange={handleModelChange} name="bin" id="bin" className="form-select" value={model_id} >
+                        <option value="">Choose a model</option>
+                        {models.map(model => {
                             return (
-                                <option key={bin.id} value={bin.href}>
-                                    {bin.bin_number}
+                                <option key={model.id} value={model.id}>
+                                    {model.manufacturer.name} {model.name}
                                 </option>
                                 );
                             })}
                     </select>
-                </div> */}
+                </div>
                 <button className="btn btn-primary">Create</button>
                 </form>
             </div>
