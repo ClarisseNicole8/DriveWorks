@@ -75,3 +75,12 @@ def api_list_customers(request):
                 {"message": "Could not create customer"},
                 status=400,
             )
+
+
+@require_http_methods(["DELETE"])
+def api_delete_customer(request, pk):
+    if request.method == "DELETE":
+        count, _ = Customer.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
+    else:
+        pass
