@@ -10,8 +10,8 @@ class Technician(models.Model):
     def get_api_url(self):
         return reverse("api_show_technician", kwargs={"pk": self.id})
 
-    # def __str__(self):
-    #     return f"{self.last_name} | {self.employee_id}"
+    def __str__(self):
+        return f"{self.first_name} | {self.last_name}"
 
 
 class AutomobileVO(models.Model):
@@ -24,18 +24,20 @@ class AutomobileVO(models.Model):
 
 
 class Appointment(models.Model):
-    date_time = models.DateTimeField(auto_now=False, auto_now_add=False)
+    date = models.DateField(max_length=50, blank=True, null=True)
+    time = models.TimeField(max_length=50, blank=True, null=True)
     reason = models.TextField()
     status = models.BooleanField(default=False)
     vin = models.CharField(max_length=50, unique=True)
     customer = models.CharField(max_length=50)
     technician = models.ForeignKey(
         Technician,
-        # changed from technician to appointments
         related_name="appointments",
         on_delete=models.PROTECT,
         null=True
     )
+    finished = models.BooleanField(default=False)
+    canceled = models.BooleanField(default=False)
 
     def get_api_url(self):
         return reverse("api_show_appointment", kwargs={"pk": self.id})

@@ -27,12 +27,15 @@ class TechnicianEncoder(ModelEncoder):
 class AppointmentEncoder(ModelEncoder):
     model = Appointment
     properties = [
-        "date_time",
+        "date",
+        "time",
         "reason",
         "status",
         "vin",
         "customer",
-        "technician"
+        "technician",
+        "finished",
+        "canceled"
     ]
     encoders = {
         "automobile": AutomobileVOEncoder(),
@@ -40,13 +43,15 @@ class AppointmentEncoder(ModelEncoder):
     }
 
     def get_extra_data(self, o):
-        if isinstance(o.datetime, str):
+        if isinstance(o.date, str) and isinstance(o.time, str):
             return {
-                "date_time": o.datetime,
+                "date": o.date,
+                "time": o.time,
             }
         else:
             return {
-                "date_time": o.datetime.isoformat(),
+                "date": o.date.isoformat(),
+                "time": o.time.isoformat(),
             }
 
 
@@ -67,7 +72,6 @@ def api_list_technicians(request):
                 encoder=TechnicianEncoder,
                 safe=False,
             )
-        # not sure if line 71/88 is correct
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "could not create the technician!!!"},
@@ -147,3 +151,49 @@ def api_show_appointment(request, pk):
                 )
         except Appointment.DoesNotExist:
             return JsonResponse({"message": "doesn't exist!!!"})
+
+
+@require_http_methods(["PUT"])
+def api_finish_appointment(request, pk):
+    if request.method == "PUT":
+        try:
+            appointment = Appointment.objects.get(id=pk)
+            content = json.loads(request.body)
+            if "status" in content:
+                status = content["status"]
+                if status == "finished":
+                    appointment.status = "finished"
+                appointment.save()
+            return JsonResponse(
+                appointment,
+                encoder=AppointmentEncoder,
+                safe=False
+            )
+        except Appointment.DoesNotExist:
+            return JsonResponse(
+                {"message": "appointment doesn't exist!!!"},
+                status=404,
+            )
+
+
+@require_http_methods(["PUT"])
+def api_cancel_appointment(request, pk):
+    if request.method == "PUT":
+        try:
+            appointment = Appointment.objects.get(id=pk)
+            content = json.loads(request.body)
+            if "status" in content:
+                status = content["status"]
+                if status == "canceled":
+                    appointment.status = "canceled"
+                appointment.save()
+            return JsonResponse(
+                appointment,
+                encoder=AppointmentEncoder,
+                safe=False
+            )
+        except Appointment.DoesNotExist:
+            return JsonResponse(
+                {"message": "appointment doesn't exist!!!"},
+                status=404,
+            )

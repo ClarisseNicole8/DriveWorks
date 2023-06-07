@@ -18,6 +18,7 @@ import SalesList from './SalesList';
 // services
 import TechnicianList from './TechnicianList';
 import TechnicianForm from './TechnicianForm';
+import AppointmentList from './AppointmentList';
 import AppointmentForm from './AppointmentForm';
 
 
@@ -43,6 +44,7 @@ function App() {
           {/* services */}
           <Route path="technicians/list" element={<TechnicianList />} />
           <Route path="technicians/new" element={<TechnicianForm />} />
+          <Route path="appointments/list" element={<AppointmentList />} />
           <Route path="appointments/new" element={<AppointmentForm />} />
         </Routes>
       </div>

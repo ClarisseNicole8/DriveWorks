@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 export default function AppointmentForm() {
-    const[date, setDate] = useState('');
-    const[time, setTime] = useState('');
+    const[dateTime, setDateTime] = useState('');
     const[reason, setReason] = useState('');
     const[vin, setVin] = useState('');
     const[customer, setCustomer] = useState('');
@@ -24,13 +23,15 @@ export default function AppointmentForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
-            date,
-            time,
+            dateTime,
             reason,
             vin,
             customer,
             technician,
         };
+
+        // delete this line later!
+        console.log("worked until line 36")
 
         const appointmentUrl = 'http://localhost:8080/api/appointments/';
         const fetchConfig = {
@@ -43,8 +44,7 @@ export default function AppointmentForm() {
         const response = await fetch(appointmentUrl, fetchConfig);
 
         if (response.ok) {
-            setDate('');
-            setTime('');
+            setDateTime('');
             setReason('');
             setVin('');
             setCustomer('');
@@ -54,11 +54,11 @@ export default function AppointmentForm() {
 
     const handleDateChange = (e) => {
         const value = e.target.value;
-        setDate(value)
+        setDateTime(value)
     }
     const handleTimeChange = (e) => {
         const value = e.target.value;
-        setTime(value)
+        setDateTime(value)
     }
     const handleReasonChange = (e) => {
         const value = e.target.value;
@@ -93,11 +93,11 @@ export default function AppointmentForm() {
                     <label htmlFor="customer">Customer</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input onChange={handleDateChange} value={date} placeholder="Date" required type="date" name="date" id="date" className="form-control"/>
+                    <input onChange={handleDateChange} value={dateTime} placeholder="Date" required type="date" name="date" id="date" className="form-control"/>
                     <label htmlFor="date">Date</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input onChange={handleTimeChange} value={time} placeholder="Time" required type="time" name="time" id="time" className="form-control"/>
+                    <input onChange={handleTimeChange} value={dateTime} placeholder="Time" required type="time" name="time" id="time" className="form-control"/>
                     <label htmlFor="time">Time</label>
                 </div>
                 <div className="mb-3">
