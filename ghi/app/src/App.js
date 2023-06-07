@@ -9,9 +9,13 @@ import VehicleModelsList from './VehicleModelsList';
 import AutomobileList from './AutomobileList';
 import AutomobileForm from './AutomobileForm';
 import VehicleModelForm from './VehicleModelForm';
+// sales
 import SalespersonList from './SalespersonList';
 import SalespersonForm from './SalespersonForm';
-
+// services
+import TechnicianList from './TechnicianList';
+import TechnicianForm from './TechnicianForm';
+import AppointmentForm from './AppointmentForm';
 
 
 function App() {
@@ -29,6 +33,9 @@ function App() {
           <Route path="automobiles/new" element={<AutomobileForm />} />
           <Route path="salespeople/" element={<SalespersonList />} />
           <Route path="salespeople/new" element={<SalespersonForm />} />
+          <Route path="technicians/list" element={<TechnicianList />} />
+          <Route path="technicians/new" element={<TechnicianForm />} />
+          <Route path="appointments/new" element={<AppointmentForm />} />
         </Routes>
       </div>
     </BrowserRouter>
