@@ -116,7 +116,7 @@ def api_list_appointments(request):
             )
         except Technician.DoesNotExist:
             return JsonResponse(
-                {"message": "invalid technician id!!!"},
+                {"message": "invalid appointment!!!"},
                 status=400,
             )
 
@@ -133,7 +133,7 @@ def api_show_appointment(request, pk):
             )
         except Appointment.DoesNotExist:
             return JsonResponse(
-                {"message": "doesn't exist!!!"},
+                {"message": "couldn't create appointment!!!"},
                 status=400,
             )
     elif request.method == "DELETE":

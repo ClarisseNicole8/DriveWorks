@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 export default function AppointmentForm() {
-    const[date_time, setDateTime] = useState('');
+    const[date, setDate] = useState('');
+    const[time, setTime] = useState('');
     const[reason, setReason] = useState('');
-    const[status, setStatus] = useState('');
     const[vin, setVin] = useState('');
     const[customer, setCustomer] = useState('');
     const[technician, setTechnician] = useState('');
@@ -24,9 +24,9 @@ export default function AppointmentForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
-            date_time,
+            date,
+            time,
             reason,
-            status,
             vin,
             customer,
             technician,
@@ -43,26 +43,26 @@ export default function AppointmentForm() {
         const response = await fetch(appointmentUrl, fetchConfig);
 
         if (response.ok) {
-            setDateTime('');
+            setDate('');
+            setTime('');
             setReason('');
-            setStatus('');
             setVin('');
             setCustomer('');
             setTechnician('');
         }
         };
 
-    const handleDateTimeChange = (e) => {
+    const handleDateChange = (e) => {
         const value = e.target.value;
-        setDateTime(value)
+        setDate(value)
+    }
+    const handleTimeChange = (e) => {
+        const value = e.target.value;
+        setTime(value)
     }
     const handleReasonChange = (e) => {
         const value = e.target.value;
         setReason(value)
-    }
-    const handleStatusChange = (e) => {
-        const value = e.target.value;
-        setStatus(value)
     }
     const handleVinChange = (e) => {
         const value = e.target.value;
@@ -93,12 +93,12 @@ export default function AppointmentForm() {
                     <label htmlFor="customer">Customer</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input onChange={handleDateTimeChange} value={vin} placeholder="Vin" required type="text" name="first_name" id="first_name" className="form-control"/>
-                    <label htmlFor="first_name">Date</label>
+                    <input onChange={handleDateChange} value={date} placeholder="Date" required type="date" name="date" id="date" className="form-control"/>
+                    <label htmlFor="date">Date</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input onChange={handleVinChange} value={vin} placeholder="Vin" required type="text" name="first_name" id="first_name" className="form-control"/>
-                    <label htmlFor="first_name">Time</label>
+                    <input onChange={handleTimeChange} value={time} placeholder="Time" required type="time" name="time" id="time" className="form-control"/>
+                    <label htmlFor="time">Time</label>
                 </div>
                 <div className="mb-3">
                     <select required onChange={handleTechnicianChange} name="technician" id="technician" className="form-select" value={technician} >

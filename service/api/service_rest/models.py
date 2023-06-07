@@ -18,8 +18,9 @@ class AutomobileVO(models.Model):
     vin = models.CharField(max_length=50, unique=True)
     sold = models.BooleanField(default=False)
 
-    def get_api_url(self):
-        return reverse("api_show_automobile", kwargs={"pk": self.id})
+    # don't need this cus no automobile detail?
+    # def get_api_url(self):
+    #     return reverse("api_show_automobile", kwargs={"pk": self.id})
 
 
 class Appointment(models.Model):
@@ -30,7 +31,8 @@ class Appointment(models.Model):
     customer = models.CharField(max_length=50)
     technician = models.ForeignKey(
         Technician,
-        related_name="technician",
+        # changed from technician to appointments
+        related_name="appointments",
         on_delete=models.PROTECT,
         null=True
     )
