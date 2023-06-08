@@ -3,14 +3,53 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
 from .models import AutomobileVO, Salesperson, Sale, Customer
-from .encoders import (
-    AutomobileVOEncoder,
-    SalespersonEncoder,
-    SaleEncoder,
-    CustomerEncoder,
-)
+from common.json import ModelEncoder
 
-import requests
+
+class AutomobileVOEncoder(ModelEncoder):
+    model = AutomobileVO
+    properties = [
+        "vin",
+        "sold",
+        "id",
+    ]
+
+
+class SalespersonEncoder(ModelEncoder):
+    model = Salesperson
+    properties = [
+        "first_name",
+        "last_name",
+        "employee_id",
+        "id",
+    ]
+
+
+class CustomerEncoder(ModelEncoder):
+    model = Customer
+    properties = [
+        "first_name",
+        "last_name",
+        "address",
+        "phone_number",
+        "id",
+    ]
+
+
+class SaleEncoder(ModelEncoder):
+    model = Sale
+    properties = [
+        "price",
+        "automobile",
+        "salesperson",
+        "customer",
+        "id",
+    ]
+    encoders = {
+        "automobile": AutomobileVOEncoder(),
+        "salesperson": SalespersonEncoder(),
+        "customer": CustomerEncoder(),
+    }
 
 
 @require_http_methods("GET")
@@ -98,9 +137,10 @@ def api_list_sales(request):
         )
     else:
         content = json.loads(request.body)
+        print(content)
         try:
-            automobile_vin = content["vin"]
-            automobile = AutomobileVO.objects.get(vin=automobile_vin)
+            vin = content["vin"]
+            automobile = AutomobileVO.objects.get(vin=vin)
             content["vin"] = automobile
         except AutomobileVO.DoesNotExist:
             return JsonResponse({"message": "Automobile does not exist"})

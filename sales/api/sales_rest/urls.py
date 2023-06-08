@@ -44,4 +44,6 @@ urlpatterns = [
         api_list_sales,
         name="api_list_sales",
     ),
+
+
 ]

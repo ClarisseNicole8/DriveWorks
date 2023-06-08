@@ -60,17 +60,19 @@ function SalesForm() {
     }
 
     const fetchData = async () => {
-        const AutomobileResponse = await fetch('http://localhost:8100/api/automobiles/');
-        const SalespeopleResponse = await fetch('http://localhost:8090/api/salespeople/');
-        const CustomerResponse = await fetch('http://localhost:8090/api/customers/');
-        if (AutomobileResponse.ok && SalespeopleResponse.ok && CustomerResponse.ok) {
-            const autodata = await AutomobileResponse.json();
-            const salesdata = await SalespeopleResponse.json();
-            const customdata = await CustomerResponse.json();
+        const automobileResponse = await fetch('http://localhost:8100/api/automobiles/');
+        const salespeopleResponse = await fetch('http://localhost:8090/api/salespeople/');
+        const customerResponse = await fetch('http://localhost:8090/api/customers/');
 
-            setAutomobiles(autodata.automobiles);
-            setSalespeople(salesdata.salespeople);
-            setCustomers(customdata.customers);
+        if (automobileResponse.ok && salespeopleResponse.ok && customerResponse.ok) {
+            const automobileData = await automobileResponse.json();
+            const salespeopleData = await salespeopleResponse.json();
+            const customerData = await customerResponse.json();
+
+            setAutomobiles(automobileData.automobiles);
+            setSalespeople(salespeopleData.salespeople);
+            setCustomers(customerData.customers);
+
 
         }
     }
@@ -85,16 +87,12 @@ function SalesForm() {
                 <div className="shadow p-4 mt-4">
                     <h1>Record a new sale</h1>
                     <form onSubmit={handleSubmit} id="create-sale-form">
-                        <div className="form-floating mb-3">
-                            <input onChange={handlePriceChange} placeholder="Price" required type="number" name="price" id="price" className="form-control" value={price} />
-                            <label htmlFor="price">Price</label>
-                        </div>
                         <div className="mb-3">
                             <select onChange={handleAutomobileChange} required name="automobile" id="automobile" className="form-select" value={automobile}>
                                 <option value="">Select an automobile</option>
-                                {automobiles.map(automobile => {
+                                {(automobiles || []).map(automobile => {
                                     return (
-                                        <option key={automobile.id} value={automobile.id}>
+                                        <option key={automobile.vin} value={automobile.vin}>
                                             {automobile.vin}
                                         </option>
                                     );
@@ -124,6 +122,10 @@ function SalesForm() {
                                     );
                                 })}
                             </select>
+                        </div>
+                        <div className="form-floating mb-3">
+                            <input onChange={handlePriceChange} placeholder="Price" required type="number" name="price" id="price" className="form-control" value={price} />
+                            <label htmlFor="price">Price</label>
                         </div>
                         <button className="btn btn-primary">Create</button>
                     </form>
