@@ -16,16 +16,6 @@ import CustomerList from './CustomerList';
 import CustomerForm from './CustomerForm';
 import SalesList from './SalesList';
 import SalesForm from './SalesForm';
-import CustomerList from './CustomerList';
-import CustomerForm from './CustomerForm';
-import SalesList from './SalesList';
-// services
-import TechnicianList from './TechnicianList';
-import TechnicianForm from './TechnicianForm';
-import AppointmentList from './AppointmentList';
-import AppointmentForm from './AppointmentForm';
-
-
 // services
 import TechnicianList from './TechnicianList';
 import TechnicianForm from './TechnicianForm';

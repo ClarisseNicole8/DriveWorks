@@ -68,8 +68,8 @@ function SalesForm() {
             const automobileData = await automobileResponse.json();
             const salespeopleData = await salespeopleResponse.json();
             const customerData = await customerResponse.json();
-
-            setAutomobiles(automobileData.automobiles);
+            console.log(automobileData)
+            setAutomobiles(automobileData.autos);
             setSalespeople(salespeopleData.salespeople);
             setCustomers(customerData.customers);
 
@@ -81,7 +81,7 @@ function SalesForm() {
         fetchData();
     },[]);
 
-    
+
     return (
         <div className="row">
             <div className="offset-3 col-6">
@@ -91,7 +91,7 @@ function SalesForm() {
                         <div className="mb-3">
                             <select onChange={handleAutomobileChange} value={automobile} name="automobile" required id="automobile" className="form-select">
                                 <option value="">Select an automobile</option>
-                                {automobiles?.map(automobile => {
+                                {automobiles.map(automobile => {
                                     return (
                                         <option key={automobile.vin} value={automobile.vin}>
                                             {automobile.vin}

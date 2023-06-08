@@ -139,11 +139,9 @@ def api_list_sales(request):
         content = json.loads(request.body)
         print(content)
         try:
-            auto_vin = content["automobile"]
-            auto = AutomobileVO.objects.get(vin=auto_vin)
-            setattr(auto, "sold", True)
-            auto.save()
-            content["automobile"] = auto
+            automobile_vin = content["automobile"]
+            automobile = AutomobileVO.objects.get(vin=automobile_vin)
+            content["automobile"] = automobile
         except AutomobileVO.DoesNotExist:
             return JsonResponse({"message": "Automobile does not exist"})
         try:
@@ -158,6 +156,13 @@ def api_list_sales(request):
             content["customer"] = customer
         except Customer.DoesNotExist:
             return JsonResponse({"message": "Customer does not exist"})
+        try:
+            price_id = content["price"]
+            price = Sale.objects.get(id=price_id)
+            content["price"] = price
+        except Sale.DoesNotExist:
+            return JsonResponse({"message": "Price does not exist"})
+
     sale = Sale.objects.create(**content)
     return JsonResponse(
         sale,

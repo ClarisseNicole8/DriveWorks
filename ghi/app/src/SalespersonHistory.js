@@ -9,6 +9,10 @@ function SalespersonHistory() {
 
     const handleSalespersonChange = (event) => {
         setSaleperson(event.target.value);
+    };
+
+    const fetchSalespeople = async () => {
+        const SalespeopleResponse 
     }
 }
 
