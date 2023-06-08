@@ -54,9 +54,9 @@ class SaleEncoder(ModelEncoder):
 
 @require_http_methods("GET")
 def api_list_automobileVOs(request):
-    automobileVOs = AutomobileVO.objects.all()
+    autoVOs = AutomobileVO.objects.all()
     return JsonResponse(
-        automobileVOs,
+        {autoVOs: autoVOs},
         encoder=AutomobileVOEncoder,
     )
 
@@ -139,9 +139,11 @@ def api_list_sales(request):
         content = json.loads(request.body)
         print(content)
         try:
-            vin = content["vin"]
-            automobile = AutomobileVO.objects.get(vin=vin)
-            content["vin"] = automobile
+            auto_vin = content["automobile"]
+            auto = AutomobileVO.objects.get(vin=auto_vin)
+            setattr(auto, "sold", True)
+            auto.save()
+            content["automobile"] = auto
         except AutomobileVO.DoesNotExist:
             return JsonResponse({"message": "Automobile does not exist"})
         try:

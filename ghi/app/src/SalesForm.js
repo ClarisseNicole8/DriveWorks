@@ -81,6 +81,7 @@ function SalesForm() {
         fetchData();
     },[]);
 
+    
     return (
         <div className="row">
             <div className="offset-3 col-6">
@@ -88,9 +89,9 @@ function SalesForm() {
                     <h1>Record a new sale</h1>
                     <form onSubmit={handleSubmit} id="create-sale-form">
                         <div className="mb-3">
-                            <select onChange={handleAutomobileChange} required name="automobile" id="automobile" className="form-select" value={automobile}>
+                            <select onChange={handleAutomobileChange} value={automobile} name="automobile" required id="automobile" className="form-select">
                                 <option value="">Select an automobile</option>
-                                {(automobiles || []).map(automobile => {
+                                {automobiles?.map(automobile => {
                                     return (
                                         <option key={automobile.vin} value={automobile.vin}>
                                             {automobile.vin}
