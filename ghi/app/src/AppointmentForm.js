@@ -1,38 +1,36 @@
 import React, { useEffect, useState } from "react";
 
 export default function AppointmentForm() {
-    const[date_time, setDateTime] = useState('');
+    const[date, setDate] = useState('');
+    const[time, setTime] = useState('');
     const[reason, setReason] = useState('');
-    const[status, setStatus] = useState('');
     const[vin, setVin] = useState('');
     const[customer, setCustomer] = useState('');
     const[technician, setTechnician] = useState('');
     const[technicians, setTechnicians] = useState([]);
 
     useEffect(() => {
-        async function getTechnician() {
-            const url = 'http://localhost:8080/api/technicians';
-            const response = await fetch(url);
-            if (response.ok) {
-                const data = await response.json();
-                setTechnicians(data.technicians);
-            };
-        }
-        getTechnician();
+        const fetchData = async () => {
+            const response = await fetch('http://localhost:8080/api/technicians');
+            const data = await response.json();
+            setTechnicians(data.technicians);
+        };
+
+        fetchData();
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
-            date_time,
+            date,
+            time,
             reason,
-            status,
             vin,
             customer,
             technician,
         };
 
-        const appointmentUrl = 'http://localhost:8080/api/appointments/';
+    const appointmentUrl = 'http://localhost:8080/api/appointments/';
         const fetchConfig = {
             method: 'post',
             body: JSON.stringify(data),
@@ -40,29 +38,30 @@ export default function AppointmentForm() {
             'Content-Type': 'application/json',
             },
         };
-        const response = await fetch(appointmentUrl, fetchConfig);
+    const response = await fetch(appointmentUrl, fetchConfig);
 
-        if (response.ok) {
-            setDateTime('');
-            setReason('');
-            setStatus('');
-            setVin('');
-            setCustomer('');
-            setTechnician('');
-        }
-        };
+    if (response.ok) {
+        setDate('');
+        setTime('');
+        setReason('');
+        setVin('');
+        setCustomer('');
+        setTechnician('');
+    }
+    };
 
-    const handleDateTimeChange = (e) => {
+
+    const handleDateChange = (e) => {
         const value = e.target.value;
-        setDateTime(value)
+        setDate(value)
+    }
+    const handleTimeChange = (e) => {
+        const value = e.target.value;
+        setTime(value)
     }
     const handleReasonChange = (e) => {
         const value = e.target.value;
         setReason(value)
-    }
-    const handleStatusChange = (e) => {
-        const value = e.target.value;
-        setStatus(value)
     }
     const handleVinChange = (e) => {
         const value = e.target.value;
@@ -93,19 +92,19 @@ export default function AppointmentForm() {
                     <label htmlFor="customer">Customer</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input onChange={handleDateTimeChange} value={vin} placeholder="Vin" required type="text" name="first_name" id="first_name" className="form-control"/>
-                    <label htmlFor="first_name">Date</label>
+                    <input onChange={handleDateChange} value={date} placeholder="Date" required type="date" name="date" id="date" className="form-control"/>
+                    <label htmlFor="date">Date</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input onChange={handleVinChange} value={vin} placeholder="Vin" required type="text" name="first_name" id="first_name" className="form-control"/>
-                    <label htmlFor="first_name">Time</label>
+                    <input onChange={handleTimeChange} value={time} placeholder="Time" required type="time" name="time" id="time" className="form-control"/>
+                    <label htmlFor="time">Time</label>
                 </div>
                 <div className="mb-3">
                     <select required onChange={handleTechnicianChange} name="technician" id="technician" className="form-select" value={technician} >
                         <option value="">Choose a technician</option>
                         {technicians.map(technician => {
                             return (
-                                <option key={technician.id} value={technician.id}>
+                                <option key={technician.employee_id} value={technician.employee_id}>
                                     {technician.first_name} {technician.last_name}
                                 </option>
                                 );
@@ -114,7 +113,7 @@ export default function AppointmentForm() {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="reason">Reason</label>
-                    <textarea onChange={handleReasonChange} id="reason" rows="3" name="reason" className="form-control"></textarea>
+                    <textarea onChange={handleReasonChange} value={reason} id="reason" rows="3" name="reason" className="form-control"></textarea>
                 </div>
                 <button className="btn btn-primary">Create</button>
                 </form>

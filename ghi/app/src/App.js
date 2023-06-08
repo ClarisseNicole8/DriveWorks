@@ -16,12 +16,21 @@ import CustomerList from './CustomerList';
 import CustomerForm from './CustomerForm';
 import SalesList from './SalesList';
 import SalesForm from './SalesForm';
+import CustomerList from './CustomerList';
+import CustomerForm from './CustomerForm';
+import SalesList from './SalesList';
 // services
 import TechnicianList from './TechnicianList';
 import TechnicianForm from './TechnicianForm';
+import AppointmentList from './AppointmentList';
 import AppointmentForm from './AppointmentForm';
 
 
+// services
+import TechnicianList from './TechnicianList';
+import TechnicianForm from './TechnicianForm';
+import AppointmentList from './AppointmentList';
+import AppointmentForm from './AppointmentForm';
 
 
 function App() {
@@ -32,20 +41,23 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="manufacturers" element={<ManufacturersList />} />
-          <Route path="manufacturers/new/" element={<ManufacturerForm />} />
+          <Route path="manufacturers/new" element={<ManufacturerForm />} />
           <Route path="models" element={<VehicleModelsList />} />
           <Route path="vehiclemodels/new" element={<VehicleModelForm />} />
-          <Route path="automobiles/list" element={<AutomobileList />} />
+          <Route path="automobiles" element={<AutomobileList />} />
           <Route path="automobiles/new" element={<AutomobileForm />} />
+          {/* sales */}
           <Route path="salespeople/" element={<SalespersonList />} />
           <Route path="salespeople/new" element={<SalespersonForm />} />
-          <Route path="technicians/list" element={<TechnicianList />} />
-          <Route path="technicians/new" element={<TechnicianForm />} />
-          <Route path="appointments/new" element={<AppointmentForm />} />
           <Route path="customers/" element={<CustomerList />} />
           <Route path="customers/new" element={<CustomerForm />} />
           <Route path="sales/" element={<SalesList />} />
           <Route path="sales/new" element={<SalesForm />} />
+          {/* services */}
+          <Route path="technicians" element={<TechnicianList />} />
+          <Route path="technicians/new" element={<TechnicianForm />} />
+          <Route path="appointments" element={<AppointmentList />} />
+          <Route path="appointments/new" element={<AppointmentForm />} />
         </Routes>
       </div>
     </BrowserRouter>
