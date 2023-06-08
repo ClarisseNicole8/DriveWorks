@@ -30,10 +30,10 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="manufacturers" element={<ManufacturersList />} />
-          <Route path="manufacturers/new/" element={<ManufacturerForm />} />
+          <Route path="manufacturers/new" element={<ManufacturerForm />} />
           <Route path="models" element={<VehicleModelsList />} />
           <Route path="vehiclemodels/new" element={<VehicleModelForm />} />
-          <Route path="automobiles/list" element={<AutomobileList />} />
+          <Route path="automobiles" element={<AutomobileList />} />
           <Route path="automobiles/new" element={<AutomobileForm />} />
           {/* sales */}
           <Route path="salespeople/" element={<SalespersonList />} />
@@ -42,9 +42,9 @@ function App() {
           <Route path="customers/new" element={<CustomerForm />} />
           <Route path="sales/" element={<SalesList />} />
           {/* services */}
-          <Route path="technicians/list" element={<TechnicianList />} />
+          <Route path="technicians" element={<TechnicianList />} />
           <Route path="technicians/new" element={<TechnicianForm />} />
-          <Route path="appointments/list" element={<AppointmentList />} />
+          <Route path="appointments" element={<AppointmentList />} />
           <Route path="appointments/new" element={<AppointmentForm />} />
         </Routes>
       </div>

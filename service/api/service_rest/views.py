@@ -11,13 +11,17 @@ class AutomobileVOEncoder(ModelEncoder):
     model = AutomobileVO
     properties = [
         "vin",
-        "sold"
+        "sold",
+        "color",
+        "year",
+        "id"
     ]
 
 
 class TechnicianEncoder(ModelEncoder):
     model = Technician
     properties = [
+        "id",
         "first_name",
         "last_name",
         "employee_id"
@@ -27,6 +31,7 @@ class TechnicianEncoder(ModelEncoder):
 class AppointmentEncoder(ModelEncoder):
     model = Appointment
     properties = [
+        "id",
         "date",
         "time",
         "reason",
@@ -34,11 +39,9 @@ class AppointmentEncoder(ModelEncoder):
         "vin",
         "customer",
         "technician",
-        "finished",
-        "canceled"
+        "vip"
     ]
     encoders = {
-        "automobile": AutomobileVOEncoder(),
         "technician": TechnicianEncoder(),
     }
 
@@ -110,19 +113,20 @@ def api_list_appointments(request):
     else:
         content = json.loads(request.body)
         try:
-            technician = Technician.objects.get(id=content['technician_id'])
-            content['technician'] = technician
-            appointment = Appointment.objects.create(**content)
-            return JsonResponse(
-                appointment,
-                encoder=AppointmentEncoder,
-                safe=False,
-            )
+            technician_id = content["technician"]
+            technician = Technician.objects.get(employee_id=technician_id)
+            content["technician"] = technician
         except Technician.DoesNotExist:
             return JsonResponse(
-                {"message": "invalid appointment!!!"},
+                {"message": "invalid technician!!!"},
                 status=400,
             )
+        appointment = Appointment.objects.create(**content)
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentEncoder,
+            safe=False,
+        )
 
 
 @require_http_methods(["GET", "DELETE"])
@@ -155,45 +159,34 @@ def api_show_appointment(request, pk):
 
 @require_http_methods(["PUT"])
 def api_finish_appointment(request, pk):
-    if request.method == "PUT":
-        try:
-            appointment = Appointment.objects.get(id=pk)
-            content = json.loads(request.body)
-            if "status" in content:
-                status = content["status"]
-                if status == "finished":
-                    appointment.status = "finished"
-                appointment.save()
-            return JsonResponse(
-                appointment,
-                encoder=AppointmentEncoder,
-                safe=False
-            )
-        except Appointment.DoesNotExist:
-            return JsonResponse(
-                {"message": "appointment doesn't exist!!!"},
-                status=404,
-            )
+    appointment = Appointment.objects.get(id=pk)
+    appointment.status = "finished"
+    appointment.save()
+    return JsonResponse(
+        appointment,
+        encoder=AppointmentEncoder,
+        safe=False
+    )
 
 
 @require_http_methods(["PUT"])
 def api_cancel_appointment(request, pk):
-    if request.method == "PUT":
-        try:
-            appointment = Appointment.objects.get(id=pk)
-            content = json.loads(request.body)
-            if "status" in content:
-                status = content["status"]
-                if status == "canceled":
-                    appointment.status = "canceled"
-                appointment.save()
-            return JsonResponse(
-                appointment,
-                encoder=AppointmentEncoder,
-                safe=False
-            )
-        except Appointment.DoesNotExist:
-            return JsonResponse(
-                {"message": "appointment doesn't exist!!!"},
-                status=404,
-            )
+    appointment = Appointment.objects.get(id=pk)
+    appointment.status = "canceled"
+    appointment.save()
+    return JsonResponse(
+        appointment,
+        encoder=AppointmentEncoder,
+        safe=False
+    )
+
+
+@require_http_methods(["GET"])
+def api_list_automobileVO(request):
+    if request.method == "GET":
+        automobileVO = AutomobileVO.objects.all()
+        return JsonResponse(
+            {"AutomobileVOs": automobileVO},
+            encoder=AutomobileVOEncoder,
+            safe=False,
+        )

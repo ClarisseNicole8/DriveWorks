@@ -10,16 +10,16 @@ export default function AppointmentList() {
     }
 
     const finishAppointment = async () => {
-        const response = await fetch('http://localhost:8080/api/appointments/${id}', {
-            method: 'PUT',
+        const response = await fetch('http://localhost:8080/api/appointments/${id}/finish/', {
+            method: "PUT",
         });
         const data = await response.json();
         setAppointments(data.appointments)
     }
 
     const cancelAppointment = async () => {
-        const response = await fetch('http://localhost:8080/api/appointments/${id}', {
-            method: 'DELETE',
+        const response = await fetch('http://localhost:8080/api/appointments/${id}/cancel/', {
+            method: "PUT",
         });
         const data = await response.json();
         setAppointments(data.appointments)
@@ -50,7 +50,7 @@ export default function AppointmentList() {
                         return (
                             <tr key={appointment.id}>
                                 <td>{appointment.vin}</td>
-                                <td>{appointment.status}</td>
+                                <td>{appointment.vip ? "Yes":"No"}</td>
                                 <td>{appointment.customer}</td>
                                 <td>{appointment.date}</td>
                                 <td>{appointment.time}</td>
