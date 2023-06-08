@@ -12,13 +12,15 @@ import VehicleModelForm from './VehicleModelForm';
 // sales
 import SalespersonList from './SalespersonList';
 import SalespersonForm from './SalespersonForm';
+import CustomerList from './CustomerList';
+import CustomerForm from './CustomerForm';
+import SalesList from './SalesList';
+import SalesForm from './SalesForm';
 // services
 import TechnicianList from './TechnicianList';
 import TechnicianForm from './TechnicianForm';
 import AppointmentForm from './AppointmentForm';
-import CustomerList from './CustomerList';
-import CustomerForm from './CustomerForm';
-import SalesList from './SalesList';
+
 
 
 
@@ -43,6 +45,7 @@ function App() {
           <Route path="customers/" element={<CustomerList />} />
           <Route path="customers/new" element={<CustomerForm />} />
           <Route path="sales/" element={<SalesList />} />
+          <Route path="sales/new" element={<SalesForm />} />
         </Routes>
       </div>
     </BrowserRouter>

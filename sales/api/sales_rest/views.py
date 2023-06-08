@@ -7,8 +7,10 @@ from .encoders import (
     AutomobileVOEncoder,
     SalespersonEncoder,
     SaleEncoder,
-    CustomerEncoder
+    CustomerEncoder,
 )
+
+import requests
 
 
 @require_http_methods("GET")
@@ -97,14 +99,26 @@ def api_list_sales(request):
     else:
         content = json.loads(request.body)
         try:
-            sale = Sale.objects.create(**content)
-            return JsonResponse(
-                sale,
-                encoder=SaleEncoder,
-                safe=False,
-            )
-        except Sale.DoesNotExist:
-            return JsonResponse(
-                {"message": "Could not create sale"},
-                status=400,
-            )
+            automobile_vin = content["vin"]
+            automobile = AutomobileVO.objects.get(vin=automobile_vin)
+            content["vin"] = automobile
+        except AutomobileVO.DoesNotExist:
+            return JsonResponse({"message": "Automobile does not exist"})
+        try:
+            salesperson_id = content["salesperson"]
+            salesperson = Salesperson.objects.get(id=salesperson_id)
+            content["salesperson"] = salesperson
+        except Salesperson.DoesNotExist:
+            return JsonResponse({"message": "Salesperson does not exist"})
+        try:
+            customer_id = content["customer"]
+            customer = Customer.objects.get(id=customer_id)
+            content["customer"] = customer
+        except Customer.DoesNotExist:
+            return JsonResponse({"message": "Customer does not exist"})
+    sale = Sale.objects.create(**content)
+    return JsonResponse(
+        sale,
+        encoder=SaleEncoder,
+        safe=False,
+    )
