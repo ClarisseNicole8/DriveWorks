@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 
 function SalesForm() {
-
     const [automobiles, setAutomobiles] = useState([]);
     const [salespeople, setSalespeople] = useState([]);
     const [customers, setCustomers] = useState([]);
@@ -90,18 +89,18 @@ function SalesForm() {
                             <input onChange={handlePriceChange} placeholder="Price" required type="number" name="price" id="price" className="form-control" value={price} />
                             <label htmlFor="price">Price</label>
                         </div>
-                        {/* <div className="mb-3">
+                        <div className="mb-3">
                             <select onChange={handleAutomobileChange} required name="automobile" id="automobile" className="form-select" value={automobile}>
                                 <option value="">Select an automobile</option>
                                 {automobiles.map(automobile => {
                                     return (
-                                        <option key={automobile.id} value={automobile.vin}>
+                                        <option key={automobile.id} value={automobile.id}>
                                             {automobile.vin}
                                         </option>
                                     );
                                 })}
                             </select>
-                        </div> */}
+                        </div>
                         <div className="mb-3">
                             <select onChange={handleSalespersonChange} required name="salesperson" id="salesperson" className="form-select" value={salesperson}>
                                 <option value="">Select a Salesperson</option>
@@ -126,7 +125,7 @@ function SalesForm() {
                                 })}
                             </select>
                         </div>
-                        <button className="btn btn-primary">Add Sale</button>
+                        <button className="btn btn-primary">Create</button>
                     </form>
                 </div>
             </div>
