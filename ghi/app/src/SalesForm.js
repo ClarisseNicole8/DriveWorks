@@ -14,32 +14,25 @@ function SalesForm() {
         const value = event.target.value;
         setAutomobile(value);
     }
-
     const handleSalespersonChange = (event) => {
         const value = event.target.value;
         setSaleperson(value);
     }
-
     const handleCustomerChange = (event) => {
         const value = event.target.value;
         setCustomer(value);
     }
-
     const handlePriceChange = (event) => {
         const value = event.target.value;
         setPrice(value);
     }
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         const data = {}
-
         data.automobile = automobile;
         data.salesperson = salesperson;
         data.customer = customer;
         data.price = price;
-
 
         const salesUrl = 'http://localhost:8090/api/sales/';
         const fetchConfig = {
@@ -57,7 +50,6 @@ function SalesForm() {
             setPrice('');
         }
     }
-
     const fetchData = async () => {
         const [automobileResponse, salespeopleResponse, customerResponse] = await Promise.all([
           fetch('http://localhost:8100/api/automobiles/'),
@@ -76,11 +68,9 @@ function SalesForm() {
           setCustomers(customerData.customers);
         }
       }
-
       useEffect(() => {
         fetchData();
       }, []);
-
 
     return (
         <div className="row">
@@ -134,9 +124,6 @@ function SalesForm() {
             </div>
         </div>
     );
-
-
 }
-
 
 export default SalesForm;
