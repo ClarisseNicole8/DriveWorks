@@ -72,10 +72,10 @@ export default function VehicleModelForm() {
                 <div className="mb-3">
                     <select required onChange={handleManufacturerChange} name="manufacturer" id="manufacturer" className="form-select" value={manufacturer_id} >
                         <option value="">Choose a manufacturer</option>
-                        {manufacturers.map(manufacturer => {
+                        {manufacturers.map(model => {
                             return (
-                                <option key={manufacturer.id} value={manufacturer.href}>
-                                    {manufacturer.number}
+                                <option key={model.id} value={model.id}>
+                                    {model.name}
                                 </option>
                                 );
                             })}

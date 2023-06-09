@@ -15,12 +15,11 @@ class Technician(models.Model):
 
 
 class AutomobileVO(models.Model):
-    vin = models.CharField(max_length=50, unique=True)
+    vin = models.CharField(max_length=50)
     sold = models.BooleanField(default=False)
 
-    # maybe self.vin?
     def get_api_url(self):
-        return reverse("api_show_automobile", kwargs={"pk": self.id})
+        return reverse("api_show_automobile", kwargs={"pk": self.vin})
 
 
 class Appointment(models.Model):
@@ -28,7 +27,7 @@ class Appointment(models.Model):
     time = models.TimeField(max_length=50, blank=True, null=True)
     reason = models.TextField()
     status = models.CharField(max_length=50)
-    vin = models.CharField(max_length=50, unique=True)
+    vin = models.CharField(max_length=50)
     customer = models.CharField(max_length=50)
     technician = models.ForeignKey(
         Technician,
@@ -37,11 +36,6 @@ class Appointment(models.Model):
         null=True
     )
     vip = models.BooleanField(default=False)
-
-    def update_vip(self, *args, **kwargs):
-        if AutomobileVO.objects.filter(vin=self.vin).exists():
-            self.vip_status = True
-        super().save(*args, **kwargs)
 
     def get_api_url(self):
         return reverse("api_show_appointment", kwargs={"pk": self.id})

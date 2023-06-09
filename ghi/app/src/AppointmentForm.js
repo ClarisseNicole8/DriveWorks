@@ -84,8 +84,8 @@ export default function AppointmentForm() {
                 <h1>Create a service appointment</h1>
                 <form onSubmit={handleSubmit} id="create-appointment-form">
                 <div className="form-floating mb-3">
-                    <input onChange={handleVinChange} value={vin} placeholder="Vin" required type="text" name="first_name" id="first_name" className="form-control"/>
-                    <label htmlFor="first_name">Automobile VIN</label>
+                    <input onChange={handleVinChange} value={vin} placeholder="Vin" required type="text" name="vin" id="vin" className="form-control"/>
+                    <label htmlFor="vin">Automobile VIN</label>
                 </div>
                 <div className="form-floating mb-3">
                     <input onChange={handleCustomerChange} value={customer} placeholder="Customer" required type="text" name="customer" id="customer" className="form-control"/>

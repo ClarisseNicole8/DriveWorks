@@ -81,7 +81,7 @@ export default function AutomobileForm() {
                     <label htmlFor="vin">VIN</label>
                 </div>
                 <div className="mb-3">
-                    <select required onChange={handleModelChange} name="bin" id="bin" className="form-select" value={model_id} >
+                    <select required onChange={handleModelChange} name="model_id" id="model_id" className="form-select" value={model_id} >
                         <option value="">Choose a model</option>
                         {models.map(model => {
                             return (

@@ -1,84 +1,40 @@
 import React, { useEffect, useState } from "react";
 
-export default function AppointmentList() {
+export default function AppointmentList(props) {
     const[appointments, setAppointments] = useState([]);
-    // const[automobiles, setAutomobiles] = useState([]);
+    console.log(props);
+    function updateVip(appointment) {
+        for (let auto of props) {
+            if (auto.vin === appointment.vin) {
+                return true;
+            }
+        }
+        return false;
+    };
 
-    // const handleFinishChange = async(id) => {
-    //     const response = await fetch(`http://localhost:8080/api/appointments/${id}/finish/`,
-    //         {'method': 'PUT'});
-    //     if (response.ok){
-    //         setAppointments('');
-    //     }
-    // }
-
-    // const handleCancelChange = async(id) => {
-    //     const response = await fetch(`http://localhost:8080/api/appointments/${id}/cancel/`,
-    //         {'method': 'PUT'});
-    //     if (response.ok){
-    //         setAppointments('');
-    //     }
-    // }
-
-    // const fetchData = async() => {
-    //     const appointmentResponse = await fetch('http://localhost:8080/api/appointments/');
-
-    //     if (appointmentResponse.ok) {
-    //         const data = await appointmentResponse.json();
-    //         setAppointments(data.appointments);
-
-    //     }
-
-    //     const automobileResponse = await fetch('http://localhost:8080/api/automobileVOs/');
-
-    //     if (automobileResponse.ok) {
-    //         const automobileData = await automobileResponse.json();
-    //         setAutomobiles(automobileData.AutomobileVOs);
-    //     }
-    // }
-
-
-    // useEffect(
-    //     () => {
-    //         fetchData();
-    //     }, []
-    // )
     const fetchData = async () => {
         const response = await fetch('http://localhost:8080/api/appointments/');
-        if (response.ok) {
-            const data = await response.json();
-            setAppointments(data.appointment);
-        }
-    };
+        const data = await response.json();
+        setAppointments(data.appointments)
+    }
 
-    const handleFinishChange = async (e, id) => {
-        e.preventDefault();
-        const finishUrl = 'http://localhost:8080/api/appointments/${id}/finish/';
-        const fetchConfig = {
-            method: 'put'
-        };
-        const finishResponse = await fetch(finishUrl, fetchConfig);
-        if (finishResponse.ok) {
-            setAppointments('');
-        }
-    };
+    const handleFinishChange = async (id) => {
+        const response = await fetch(`http://localhost:8080/api/appointments/${id}/finish/`, {
+            method: 'put',
+        });
+    }
 
-    const handleCancelChange = async (e, id) => {
-        e.preventDefault();
-        const cancelUrl = 'http://localhost:8080/api/appointments/${id}/cancel/';
-        const fetchConfig = {
-            method: 'put'
-        };
-        const cancelResponse = await fetch(cancelUrl, fetchConfig);
-        if (cancelResponse.ok) {
-            setAppointments('');
-        }
-    };
+    const handleCancelChange = async (id) => {
+        const response = await fetch(`http://localhost:8080/api/appointments/${id}/cancel/`, {
+            method: 'put',
+        });
+    }
+
+
 
     useEffect(() => {
-            fetchData();
-        }, []
-    )
+        fetchData()
+    }, [])
 
 
     return (
@@ -97,11 +53,11 @@ export default function AppointmentList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {appointments?.map(appointment => {
+                    {appointments.map(appointment => {
                         return (
                             <tr key={appointment.id}>
                                 <td>{appointment.vin}</td>
-                                <td>{appointment.vip ? "Yes":"No"}</td>
+                                <td>{updateVip(appointment) ? "yes" : "no"}</td>
                                 <td>{appointment.customer}</td>
                                 <td>{appointment.date}</td>
                                 <td>{appointment.time}</td>
