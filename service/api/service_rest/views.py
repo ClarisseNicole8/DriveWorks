@@ -182,7 +182,7 @@ def api_cancel_appointment(request, pk):
 
 
 @require_http_methods(["GET"])
-def api_list_automobileVO(request):
+def api_list_automobileVOs(request):
     if request.method == "GET":
         automobileVO = AutomobileVO.objects.all()
         return JsonResponse(
