@@ -65,7 +65,7 @@ function SalesForm() {
           fetch('http://localhost:8090/api/customers/')
         ]);
 
-        if (automobileResponse.ok && salespeopleResponse.ok && customerResponse.ok) {
+        if (automobileResponse.ok, salespeopleResponse.ok, customerResponse.ok) {
           const [automobileData, salespeopleData, customerData] = await Promise.all([
             automobileResponse.json(),
             salespeopleResponse.json(),
