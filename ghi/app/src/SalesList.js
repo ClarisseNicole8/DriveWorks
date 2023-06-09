@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 function SalesList () {
     const [sales, setSales] = useState([]);
-    const [autos, setAutos] = useState([]);
 
     const fetchData = async () => {
         const url = 'http://localhost:8090/api/sales/';
@@ -11,8 +10,7 @@ function SalesList () {
 
         if (response.ok) {
             const data = await response.json();
-            console.log("data", data)
-            setSales(data.auto)
+            setSales(data.sales)
         }
     }
 
@@ -26,22 +24,22 @@ function SalesList () {
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th>Automobile VIN</th>
-                        <th>Employee ID</th>
-                        <th>Salesperson</th>
+                        <th>Salesperson Employee ID</th>
+                        <th>Salesperson Name</th>
                         <th>Customer</th>
+                        <th>VIN</th>
                         <th>Price</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {autos.map(auto => {
+                    {sales.map(sale => {
                         return (
-                            <tr key={auto.vin}>
-                                <td>{ auto.vin }</td>
-                                {/* <td>{ auto.sale.salesperson.employee_id }</td>
-                                <td>{ auto.sale.salesperson.first_name } { sale.salesperson.last_name }</td>
-                                <td>{ auto.sale.customer.first_name } { sale.customer.last_name }</td>
-                                <td>{ auto.sale.price }</td> */}
+                            <tr key={sale.automobile.vin}>
+                                <td>{ sale.salesperson.employee_id }</td>
+                                <td>{ sale.salesperson.first_name } { sale.salesperson.last_name }</td>
+                                <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
+                                <td>{ sale.automobile.vin }</td>
+                                <td>{ sale.price }</td>
                             </tr>
                         )
                     })}
