@@ -137,13 +137,6 @@ def api_list_sales(request):
         )
     else:
         content = json.loads(request.body)
-        print(content)
-        try:
-            automobile_vin = content["automobile"]
-            automobile = AutomobileVO.objects.get(vin=automobile_vin)
-            content["automobile"] = automobile
-        except AutomobileVO.DoesNotExist:
-            return JsonResponse({"message": "Automobile does not exist"})
         try:
             salesperson_id = content["salesperson"]
             salesperson = Salesperson.objects.get(id=salesperson_id)
@@ -151,17 +144,24 @@ def api_list_sales(request):
         except Salesperson.DoesNotExist:
             return JsonResponse({"message": "Salesperson does not exist"})
         try:
-            customer_id = content["customer"]
-            customer = Customer.objects.get(id=customer_id)
-            content["customer"] = customer
-        except Customer.DoesNotExist:
-            return JsonResponse({"message": "Customer does not exist"})
-        try:
-            price_id = content["price"]
-            price = Sale.objects.get(id=price_id)
-            content["price"] = price
-        except Sale.DoesNotExist:
-            return JsonResponse({"message": "Price does not exist"})
+            auto_vin = content["automobile"]
+            automobile = AutomobileVO.objects.get(vin=auto_vin)
+            content["automobile"] = automobile
+        except AutomobileVO.DoesNotExist:
+            return JsonResponse({"message": "Automobile does not exist"})
+
+        # try:
+        #     customer_id = content["customer"]
+        #     customer = Customer.objects.get(id=customer_id)
+        #     content["customer"] = customer
+        # except Customer.DoesNotExist:
+        #     return JsonResponse({"message": "Customer does not exist"})
+        # try:
+        #     price_id = content["price"]
+        #     price = Sale.objects.get(id=price_id)
+        #     content["price"] = price
+        # except Sale.DoesNotExist:
+        #     return JsonResponse({"message": "Price does not exist"})
 
     sale = Sale.objects.create(**content)
     return JsonResponse(
@@ -169,3 +169,14 @@ def api_list_sales(request):
         encoder=SaleEncoder,
         safe=False,
     )
+
+
+@require_http_methods(["GET"])
+def api_salesperson_history(request, pk):
+    if request.method == "GET":
+        salesperson = Salesperson.objects.get(id=pk)
+        sales = Sale.objects.filter(salesperson=salesperson)
+        return JsonResponse(
+            {"sales": sales},
+            encoder=SaleEncoder
+        )
