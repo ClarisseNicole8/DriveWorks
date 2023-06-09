@@ -5,6 +5,7 @@ Team:
 * Cindy Lam - Automobile Service
 * Clarisse Alvarez - Automobile Sales
 
+## How to Run
 To get started, you will need Docker, GitLab, and Node.js installed.
 Fork and clone the repository to your local device.
 Run the following commands to build and run the project using Docker:
@@ -25,30 +26,115 @@ Services
 
 The endpoints to send and view data for the Inventory are accessible through Insomnia.
 
-**M
+[Link to diagram](https://excalidraw.com/#json=KOlVnXr-hio_isSvlXBrv,SRefxhKvPWfbYjN6WTmxiw)
 
-## Service microservice
+### Manufacturers
+Urls & Ports:
 
-Explain your models and integration with the inventory
-microservice, here.
+| Action | Method | URL
+| ----------- | ----------- | ----------- |
+| List manufacturers | GET | http://localhost:8100/api/manufacturers/
+| Create a manufacturer | POST | http://localhost:8100/api/manufacturers/ |
+| Get a specific manufacturer | GET | http://localhost:8100/api/manufacturers/id/
+| Update a specific manufacturer | PUT | http://localhost:8100/api/manufacturers/id/
+| Delete a specific manufacturer | DELETE | http://localhost:8100/api/manufacturers/id/
 
-Models:
-1) Technician
-- first_name
-- last_name
-- employee_id
-2) AutomobileVO
-- vin
-- sold
-3) Appointment
-- date_time
-- reason
-- status
-- vin
-- customer
-- technician (foreign key)
 
-## Sales microservice
+## **Service microservice**
+
+The Service microservice has the following models:
+- Technician
+	- first_name
+	- last_name
+	- employee_id
+- AutomobileVO
+	- vin
+	- sold
+- Appointment
+	- date
+	- time
+	- reason
+	- status
+	- vin
+	- customer
+	- technician (ForeignKey)
+	- vip
+
+**Technicians**
+| Action | Method | URL
+| ----------- | ----------- | ----------- |
+| List technicians | GET | http://localhost:8080/api/technicians/
+| Create a technician | POST | http://localhost:8080/api/technicians/
+| Delete a technician | DELETE | http://localhost:8080/api/technicians/:id/
+
+Accessing Endpoints:
+
+<details>
+<summary> List technicians (GET) </summary>
+
+1. Follow endpoint: http://localhost:8080/api/technicians/
+
+2. No need to provide data because this is a GET request. A list of all technicians will be shown.
+
+	Example:
+```json
+		{
+			"href": "/api/technicians/2/",
+			"id": 2,
+			"first_name": "Lolly",
+			"last_name": "Pop",
+			"employee_id": "Pink"
+		},
+```
+</details>
+
+<details>
+<summary> Create a technician (POST) </summary>
+
+1. Create a technician by using the following format:
+
+	Example:
+```json
+		{
+			"first_name": "Kit",
+			"last_name": "Kat",
+			"employee_id": "PB"
+		}
+```
+2. Then submit it as a POST request.
+3. This will be the response of that request:
+```json
+		{
+			"href": "/api/technicians/5/",
+			"id": 5,
+			"first_name": "Kit",
+			"last_name": "Kat",
+			"employee_id": "PB"
+		}
+```
+</details>
+
+<details>
+<summary> Delete a technician (DELETE) </summary>
+
+1. Follow endpoint: http://localhost:8080/api/technicians/:id/. Make sure to put the id of the specific technician in place of ":id".
+
+2. No need to provide data because this is a GET request. A list of all technicians will be shown.
+
+	Example:
+```json
+		{
+			"href": "/api/technicians/2/",
+			"id": 2,
+			"first_name": "Lolly",
+			"last_name": "Pop",
+			"employee_id": "Pink"
+		},
+```
+</details>
+
+
+## **Sales microservice**
 
 The Sales microservice has the following models:
 AutomobileVO,
