@@ -18,7 +18,7 @@ You may see a warning about an environment variable "OS" being missing if runnin
 
 Make sure that all Docker containers are running and open a browser to http://localhost:3000/
 
-**Diagram**
+**Diagram** [Link to diagram](https://excalidraw.com/#json=KOlVnXr-hio_isSvlXBrv,SRefxhKvPWfbYjN6WTmxiw)
 
 ## Design
 There are 3 microservices that interact with each other:
