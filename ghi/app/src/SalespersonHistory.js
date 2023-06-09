@@ -17,7 +17,7 @@ function SalespersonHistory() {
             setSales(data.sales);
         }
 
-        const salespeopleResponse = fetch('http://localhost:8090/api/salespeople/');
+        const salespeopleResponse = await fetch('http://localhost:8090/api/salespeople/');
 
         if (salespeopleResponse.ok) {
             const salespeopleData = await salespeopleResponse.json();
@@ -28,7 +28,7 @@ function SalespersonHistory() {
     useEffect(() => {
         getData()
     }, []);
-    
+
 
     return (
         <div>
