@@ -4,7 +4,6 @@ function Nav() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-success">
       <div className="container-fluid">
-        <div className="row">
           <NavLink className="navbar-brand" to="/">CarCar</NavLink>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -51,16 +50,12 @@ function Nav() {
                 <NavLink className="nav-link" to="/sales">Sales</NavLink>
               </li>
               <li className="nav-item">
-              <NavLink className="nav-link" to="/sales/new">Create a sale</NavLink>
-            </li>
-            <li>
-              <NavLink className="nav-link" to="/sales/history">Sale History</NavLink>
-            </li>
-            </ul>
-          </div>
-          <div>
-          <ul className="navbar-nav me-auto mb-2 mb-lg-4">
-            {/* services */}
+                <NavLink className="nav-link" to="/sales/new">Create a sale</NavLink>
+              </li>
+              <li>
+                <NavLink className="nav-link" to="/sales/history">Sale History</NavLink>
+              </li>
+              {/* services */}
               <li className="nav-item">
                 <NavLink className="nav-link" to="/technicians">Technicians</NavLink>
               </li>
@@ -79,7 +74,6 @@ function Nav() {
             </ul>
           </div>
         </div>
-      </div>
     </nav>
   )
 }

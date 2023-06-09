@@ -10,22 +10,17 @@ function SalespersonForm() {
         const value = event.target.value;
         setFirstName(value);
     }
-
     const handleLastNameChange = (event) => {
         const value = event.target.value;
         setLastName(value);
     }
-
     const handleEmployeeIdChange = (event)=> {
         const value = event.target.value;
         setEmployeeId(value);
     }
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         const data = {}
-
         data.first_name = firstName;
         data.last_name = lastName;
         data.employee_id = employeeId;
@@ -38,17 +33,14 @@ function SalespersonForm() {
                     'Content-Type': 'application/json',
                 },
             };
-
         const response = await fetch(salepersonUrl, fetchConfig);
         if (response.ok) {
             const newSalesperson = await response.json();
-
             setFirstName('');
             setLastName('');
             setEmployeeId('');
         }
     }
-
     return (
         <div className="row">
             <div className="offset-3 col-6">
@@ -73,7 +65,6 @@ function SalespersonForm() {
             </div>
         </div>
     )
-
 }
 
 export default SalespersonForm;

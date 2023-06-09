@@ -6,15 +6,12 @@ function SalespersonList () {
 
     const fetchData = async () => {
         const url = 'http://localhost:8090/api/salespeople/';
-
         const response = await fetch(url);
-
         if (response.ok) {
             const data = await response.json();
             setSalespeople(data.salespeople)
         }
     }
-
     useEffect(() => {
         fetchData();
     }, []);

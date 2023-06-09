@@ -1,11 +1,11 @@
 # CarCar
 
-Team:
+## Team:
 
 * Cindy Lam - Automobile Service
 * Clarisse Alvarez - Automobile Sales
 
-## How to Run
+## How to Run this App
 To get started, you will need Docker, GitLab, and Node.js installed.
 Fork and clone the repository to your local device.
 Run the following commands to build and run the project using Docker:
@@ -18,26 +18,113 @@ You may see a warning about an environment variable "OS" being missing if runnin
 
 Make sure that all Docker containers are running and open a browser to http://localhost:3000/
 
+**Diagram**
+
 ## Design
 There are 3 microservices that interact with each other:
 Inventory
 Sales
 Services
 
+## API Documentation
+
+**URLs and Ports**
+Inventory: http://localhost:8100/
+Sales: http://localhost:8090/
+Services: http://localhost:8080/
+
+**Inventory API**
 The endpoints to send and view data for the Inventory are accessible through Insomnia.
 
-[Link to diagram](https://excalidraw.com/#json=KOlVnXr-hio_isSvlXBrv,SRefxhKvPWfbYjN6WTmxiw)
+**Manufacturers**
 
-### Manufacturers
-Urls & Ports:
-
-| Action | Method | URL
-| ----------- | ----------- | ----------- |
-| List manufacturers | GET | http://localhost:8100/api/manufacturers/
 | Create a manufacturer | POST | http://localhost:8100/api/manufacturers/ |
+Create a manufacturer(SEND JSON BODY)
+:
+```
+{
+  "name": "GMC"
+}
+```
+Return Value upon successful creation:
+```
+{
+	"href": "/api/manufacturers/3/",
+	"id": 3,
+	"name": "GMC"
+}
+```
+| List manufacturers | GET | http://localhost:8100/api/manufacturers/
 | Get a specific manufacturer | GET | http://localhost:8100/api/manufacturers/id/
 | Update a specific manufacturer | PUT | http://localhost:8100/api/manufacturers/id/
 | Delete a specific manufacturer | DELETE | http://localhost:8100/api/manufacturers/id/
+
+**Vehicle Models**
+| Create a vehicle model | POST | http://localhost:8100/api/models/
+Create a vehicle(SEND JSON BODY)
+```
+{
+  "name": "Forester",
+  "picture_url": "https://pictures.dealer.com/g/granitesubarusne/0738/f8dfd863f8b2a8852114a26671daf392x.jpg?impolicy=downsize&w=568",
+  "manufacturer_id": 1
+}
+```
+Return Value upon successful creation:
+```
+{
+	"href": "/api/models/1/",
+	"id": 1,
+	"name": "Forester",
+	"picture_url": "https://pictures.dealer.com/g/granitesubarusne/0738/f8dfd863f8b2a8852114a26671daf392x.jpg?impolicy=downsize&w=568",
+	"manufacturer": {
+		"href": "/api/manufacturers/1/",
+		"id": 1,
+		"name": "Subaru"
+	}
+}
+```
+| List vehicle models | GET | http://localhost:8100/api/models/
+| Get a specific vehicle model | GET | http://localhost:8100/api/models/id/
+| Update a specific vehicle model | PUT | http://localhost:8100/api/models/id/
+| Delete a specific vehicle model | DELETE | http://localhost:8100/api/models/id/
+
+**Automobiles**
+| Create an automobile | POST | http://localhost:8100/api/automobiles/
+Create an automobile(SEND JSON BODY)
+```
+{
+  "color": "black",
+  "year": 2022,
+  "vin": "1C3CC5FB2AN120192",
+  "model_id": 1
+}
+```
+Return Value upon successful creation:
+```
+{
+	"href": "/api/automobiles/1C3CC5FB2AN120192/",
+	"id": 9,
+	"color": "black",
+	"year": 2022,
+	"vin": "1C3CC5FB2AN120192",
+	"model": {
+		"href": "/api/models/1/",
+		"id": 1,
+		"name": "Forester",
+		"picture_url": "https://pictures.dealer.com/g/granitesubarusne/0738/f8dfd863f8b2a8852114a26671daf392x.jpg?impolicy=downsize&w=568",
+		"manufacturer": {
+			"href": "/api/manufacturers/1/",
+			"id": 1,
+			"name": "Subaru"
+		}
+	},
+	"sold": false
+}
+```
+| List automobiles | GET | http://localhost:8100/api/automobiles/
+| Get a specific automobile | GET | http://localhost:8100/api/automobiles/vin/
+| Update a specific automobile | PUT | http://localhost:8100/api/automobiles/vin/
+| Delete a specific automobile | DELETE | http://localhost:8100/api/automobiles/vin/
 
 
 ## **Service microservice**

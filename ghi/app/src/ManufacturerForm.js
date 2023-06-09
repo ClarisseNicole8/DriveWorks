@@ -8,12 +8,9 @@ function ManufacturerForm() {
         const value = event.target.value;
         setManufacturer(value);
     }
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         const data = {}
-
         data.name = manufacturer;
 
         const manufacturerUrl = 'http://localhost:8100/api/manufacturers/';
@@ -30,7 +27,6 @@ function ManufacturerForm() {
             setManufacturer('');
         }
     }
-
     return (
         <div className="row">
             <div className="offset-3 col-6">
