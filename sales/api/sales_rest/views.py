@@ -1,55 +1,20 @@
-# from django.shortcuts import render
+import requests
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
-from .models import AutomobileVO, Salesperson, Sale, Customer
-from common.json import ModelEncoder
+from .models import (
+    AutomobileVO,
+    Salesperson,
+    Sale,
+    Customer,
+)
 
-
-class AutomobileVOEncoder(ModelEncoder):
-    model = AutomobileVO
-    properties = [
-        "vin",
-        "sold",
-        "id",
-    ]
-
-
-class SalespersonEncoder(ModelEncoder):
-    model = Salesperson
-    properties = [
-        "first_name",
-        "last_name",
-        "employee_id",
-        "id",
-    ]
-
-
-class CustomerEncoder(ModelEncoder):
-    model = Customer
-    properties = [
-        "first_name",
-        "last_name",
-        "address",
-        "phone_number",
-        "id",
-    ]
-
-
-class SaleEncoder(ModelEncoder):
-    model = Sale
-    properties = [
-        "price",
-        "automobile",
-        "salesperson",
-        "customer",
-        "id",
-    ]
-    encoders = {
-        "automobile": AutomobileVOEncoder(),
-        "salesperson": SalespersonEncoder(),
-        "customer": CustomerEncoder(),
-    }
+from .encoders import (
+    AutomobileVOEncoder,
+    SalespersonEncoder,
+    CustomerEncoder,
+    SaleEncoder,
+)
 
 
 @require_http_methods("GET")
@@ -133,7 +98,7 @@ def api_list_sales(request):
         sales = Sale.objects.all()
         return JsonResponse(
             {"sales": sales},
-            encoder=SaleEncoder,
+            encoder=SaleEncoder
         )
     else:
         content = json.loads(request.body)
@@ -144,31 +109,46 @@ def api_list_sales(request):
         except Salesperson.DoesNotExist:
             return JsonResponse({"message": "Salesperson does not exist"})
         try:
+            customer_id = content["customer"]
+            customer = Customer.objects.get(id=customer_id)
+            content["customer"] = customer
+        except Customer.DoesNotExist:
+            return JsonResponse({"message": "Customer does not exist"})
+        try:
             auto_vin = content["automobile"]
-            automobile = AutomobileVO.objects.get(vin=auto_vin)
-            content["automobile"] = automobile
+            auto = AutomobileVO.objects.get(vin=auto_vin)
+            setattr(auto, "sold", True)
+            auto.save()
+            content["automobile"] = auto
         except AutomobileVO.DoesNotExist:
             return JsonResponse({"message": "Automobile does not exist"})
 
-        # try:
-        #     customer_id = content["customer"]
-        #     customer = Customer.objects.get(id=customer_id)
-        #     content["customer"] = customer
-        # except Customer.DoesNotExist:
-        #     return JsonResponse({"message": "Customer does not exist"})
-        # try:
-        #     price_id = content["price"]
-        #     price = Sale.objects.get(id=price_id)
-        #     content["price"] = price
-        # except Sale.DoesNotExist:
-        #     return JsonResponse({"message": "Price does not exist"})
+        sale = Sale.objects.create(**content)
+        requests.put(
+            f"http://inventory-api:8000/api/automobiles/{auto_vin}/",
+            data=json.dumps(
+                {"sold": "True"}
+            ))
 
-    sale = Sale.objects.create(**content)
-    return JsonResponse(
-        sale,
-        encoder=SaleEncoder,
-        safe=False,
-    )
+        return JsonResponse(
+            sale,
+            encoder=SaleEncoder,
+            safe=False
+        )
+
+
+@require_http_methods(["DELETE"])
+def api_delete_sale(request, pk):
+    try:
+        sale = Sale.objects.get(id=pk)
+        sale.delete()
+        return JsonResponse(
+            sale,
+            encoder=SaleEncoder,
+            safe=False
+        )
+    except Sale.DoesNotExist:
+        return JsonResponse({"message": "Sale does not exist"})
 
 
 @require_http_methods(["GET"])

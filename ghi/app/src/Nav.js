@@ -50,16 +50,16 @@ function Nav() {
               <li className="nav-item">
                 <NavLink className="nav-link" to="/sales">Sales</NavLink>
               </li>
-            </ul>
-          </div>
-          <div>
-          <ul className="navbar-nav me-auto mb-2 mb-lg-4">
               <li className="nav-item">
               <NavLink className="nav-link" to="/sales/new">Create a sale</NavLink>
             </li>
             <li>
               <NavLink className="nav-link" to="/sales/history">Sale History</NavLink>
             </li>
+            </ul>
+          </div>
+          <div>
+          <ul className="navbar-nav me-auto mb-2 mb-lg-4">
             {/* services */}
               <li className="nav-item">
                 <NavLink className="nav-link" to="/technicians">Technicians</NavLink>

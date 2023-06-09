@@ -10,9 +10,7 @@ function SalesList () {
 
         if (response.ok) {
             const data = await response.json();
-            console.log("data", data)
             setSales(data.sales)
-            console.log(sales)
         }
     }
 
@@ -26,10 +24,10 @@ function SalesList () {
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th>Automobile VIN</th>
-                        <th>Employee ID</th>
-                        <th>Salesperson</th>
+                        <th>Salesperson Employee ID</th>
+                        <th>Salesperson Name</th>
                         <th>Customer</th>
+                        <th>VIN</th>
                         <th>Price</th>
                     </tr>
                 </thead>
@@ -37,10 +35,10 @@ function SalesList () {
                     {sales.map(sale => {
                         return (
                             <tr key={sale.automobile.vin}>
-                                <td>{ sale.automobile.vin }</td>
                                 <td>{ sale.salesperson.employee_id }</td>
                                 <td>{ sale.salesperson.first_name } { sale.salesperson.last_name }</td>
                                 <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
+                                <td>{ sale.automobile.vin }</td>
                                 <td>{ sale.price }</td>
                             </tr>
                         )

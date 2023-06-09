@@ -40,7 +40,6 @@ function SalesForm() {
         data.customer = customer;
         data.price = price;
 
-        console.log(data);
 
         const salesUrl = 'http://localhost:8090/api/sales/';
         const fetchConfig = {
@@ -60,26 +59,27 @@ function SalesForm() {
     }
 
     const fetchData = async () => {
-        const automobileResponse = await fetch('http://localhost:8100/api/automobiles/');
-        const salespeopleResponse = await fetch('http://localhost:8090/api/salespeople/');
-        const customerResponse = await fetch('http://localhost:8090/api/customers/');
+        const [automobileResponse, salespeopleResponse, customerResponse] = await Promise.all([
+          fetch('http://localhost:8100/api/automobiles/'),
+          fetch('http://localhost:8090/api/salespeople/'),
+          fetch('http://localhost:8090/api/customers/')
+        ]);
 
-        if (automobileResponse.ok && salespeopleResponse.ok && customerResponse.ok) {
-            const automobileData = await automobileResponse.json();
-            const salespeopleData = await salespeopleResponse.json();
-            const customerData = await customerResponse.json();
-            console.log(automobileData)
-            setAutomobiles(automobileData.autos);
-            setSalespeople(salespeopleData.salespeople);
-            setCustomers(customerData.customers);
-
-
+        if (automobileResponse.ok, salespeopleResponse.ok, customerResponse.ok) {
+          const [automobileData, salespeopleData, customerData] = await Promise.all([
+            automobileResponse.json(),
+            salespeopleResponse.json(),
+            customerResponse.json()
+          ]);
+          setAutomobiles(automobileData.autos);
+          setSalespeople(salespeopleData.salespeople);
+          setCustomers(customerData.customers);
         }
-    }
+      }
 
-    useEffect(() => {
+      useEffect(() => {
         fetchData();
-    },[]);
+      }, []);
 
 
     return (
