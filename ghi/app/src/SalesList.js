@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 function SalesList () {
     const [sales, setSales] = useState([]);
+    const [autos, setAutos] = useState([]);
 
     const fetchData = async () => {
         const url = 'http://localhost:8090/api/sales/';
@@ -11,8 +12,7 @@ function SalesList () {
         if (response.ok) {
             const data = await response.json();
             console.log("data", data)
-            setSales(data.sales)
-            console.log(sales)
+            setSales(data.auto)
         }
     }
 
@@ -34,14 +34,14 @@ function SalesList () {
                     </tr>
                 </thead>
                 <tbody>
-                    {sales.map(sale => {
+                    {autos.map(auto => {
                         return (
-                            <tr key={sale.automobile.vin}>
-                                <td>{ sale.automobile.vin }</td>
-                                <td>{ sale.salesperson.employee_id }</td>
-                                <td>{ sale.salesperson.first_name } { sale.salesperson.last_name }</td>
-                                <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
-                                <td>{ sale.price }</td>
+                            <tr key={auto.vin}>
+                                <td>{ auto.vin }</td>
+                                {/* <td>{ auto.sale.salesperson.employee_id }</td>
+                                <td>{ auto.sale.salesperson.first_name } { sale.salesperson.last_name }</td>
+                                <td>{ auto.sale.customer.first_name } { sale.customer.last_name }</td>
+                                <td>{ auto.sale.price }</td> */}
                             </tr>
                         )
                     })}

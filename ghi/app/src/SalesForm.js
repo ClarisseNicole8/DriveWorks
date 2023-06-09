@@ -40,7 +40,6 @@ function SalesForm() {
         data.customer = customer;
         data.price = price;
 
-        console.log(data);
 
         const salesUrl = 'http://localhost:8090/api/sales/';
         const fetchConfig = {
@@ -68,7 +67,6 @@ function SalesForm() {
             const automobileData = await automobileResponse.json();
             const salespeopleData = await salespeopleResponse.json();
             const customerData = await customerResponse.json();
-            console.log(automobileData)
             setAutomobiles(automobileData.autos);
             setSalespeople(salespeopleData.salespeople);
             setCustomers(customerData.customers);
