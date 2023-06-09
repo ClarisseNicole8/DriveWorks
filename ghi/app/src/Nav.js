@@ -40,6 +40,8 @@ function Nav() {
                 <NavLink className="nav-link" to="/salespeople/new">Create a Salesperson</NavLink>
               </li>
               <li className="nav-item">
+            </li>
+            <li className="nav-item">
                 <NavLink className="nav-link" to="/customers">Customers</NavLink>
               </li>
               <li className="nav-item">
@@ -52,7 +54,14 @@ function Nav() {
           </div>
           <div>
           <ul className="navbar-nav me-auto mb-2 mb-lg-4">
-              {/* services */}
+              <li className="nav-item">
+              <NavLink className="nav-link" to="/sales/new">Create a sale</NavLink>
+            </li>
+            <li>
+              <NavLink className="nav-link" to="/sales/history">Sale History</NavLink>
+            </li>
+
+            {/* services */}
               <li className="nav-item">
                 <NavLink className="nav-link" to="/technicians">Technicians</NavLink>
               </li>

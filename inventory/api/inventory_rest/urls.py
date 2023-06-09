@@ -7,6 +7,7 @@ from .views import (
     api_manufacturer,
     api_vehicle_models,
     api_vehicle_model,
+
 )
 
 urlpatterns = [
@@ -40,4 +41,5 @@ urlpatterns = [
         api_vehicle_model,
         name="api_vehicle_model",
     ),
+
 ]

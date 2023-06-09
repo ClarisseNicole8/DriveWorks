@@ -3,19 +3,60 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
 from .models import AutomobileVO, Salesperson, Sale, Customer
-from .encoders import (
-    AutomobileVOEncoder,
-    SalespersonEncoder,
-    SaleEncoder,
-    CustomerEncoder
-)
+from common.json import ModelEncoder
+
+
+class AutomobileVOEncoder(ModelEncoder):
+    model = AutomobileVO
+    properties = [
+        "vin",
+        "sold",
+        "id",
+    ]
+
+
+class SalespersonEncoder(ModelEncoder):
+    model = Salesperson
+    properties = [
+        "first_name",
+        "last_name",
+        "employee_id",
+        "id",
+    ]
+
+
+class CustomerEncoder(ModelEncoder):
+    model = Customer
+    properties = [
+        "first_name",
+        "last_name",
+        "address",
+        "phone_number",
+        "id",
+    ]
+
+
+class SaleEncoder(ModelEncoder):
+    model = Sale
+    properties = [
+        "price",
+        "automobile",
+        "salesperson",
+        "customer",
+        "id",
+    ]
+    encoders = {
+        "automobile": AutomobileVOEncoder(),
+        "salesperson": SalespersonEncoder(),
+        "customer": CustomerEncoder(),
+    }
 
 
 @require_http_methods("GET")
 def api_list_automobileVOs(request):
-    automobileVOs = AutomobileVO.objects.all()
+    autoVOs = AutomobileVO.objects.all()
     return JsonResponse(
-        automobileVOs,
+        {autoVOs: autoVOs},
         encoder=AutomobileVOEncoder,
     )
 
@@ -97,14 +138,45 @@ def api_list_sales(request):
     else:
         content = json.loads(request.body)
         try:
-            sale = Sale.objects.create(**content)
-            return JsonResponse(
-                sale,
-                encoder=SaleEncoder,
-                safe=False,
-            )
-        except Sale.DoesNotExist:
-            return JsonResponse(
-                {"message": "Could not create sale"},
-                status=400,
-            )
+            salesperson_id = content["salesperson"]
+            salesperson = Salesperson.objects.get(id=salesperson_id)
+            content["salesperson"] = salesperson
+        except Salesperson.DoesNotExist:
+            return JsonResponse({"message": "Salesperson does not exist"})
+        try:
+            auto_vin = content["automobile"]
+            automobile = AutomobileVO.objects.get(vin=auto_vin)
+            content["automobile"] = automobile
+        except AutomobileVO.DoesNotExist:
+            return JsonResponse({"message": "Automobile does not exist"})
+
+        # try:
+        #     customer_id = content["customer"]
+        #     customer = Customer.objects.get(id=customer_id)
+        #     content["customer"] = customer
+        # except Customer.DoesNotExist:
+        #     return JsonResponse({"message": "Customer does not exist"})
+        # try:
+        #     price_id = content["price"]
+        #     price = Sale.objects.get(id=price_id)
+        #     content["price"] = price
+        # except Sale.DoesNotExist:
+        #     return JsonResponse({"message": "Price does not exist"})
+
+    sale = Sale.objects.create(**content)
+    return JsonResponse(
+        sale,
+        encoder=SaleEncoder,
+        safe=False,
+    )
+
+
+@require_http_methods(["GET"])
+def api_salesperson_history(request, pk):
+    if request.method == "GET":
+        salesperson = Salesperson.objects.get(id=pk)
+        sales = Sale.objects.filter(salesperson=salesperson)
+        return JsonResponse(
+            {"sales": sales},
+            encoder=SaleEncoder
+        )
