@@ -139,17 +139,16 @@ def api_list_sales(request):
 
 @require_http_methods(["DELETE"])
 def api_delete_sale(request, pk):
-    if request.method == "DELETE":
-        try:
-            sale = Sale.objects.get(id=pk)
-            sale.delete()
-            return JsonResponse(
-                sale,
-                encoder=SaleEncoder,
-                safe=False
-            )
-        except Sale.DoesNotExist:
-            return JsonResponse({"message": "Sale does not exist"})
+    try:
+        sale = Sale.objects.get(id=pk)
+        sale.delete()
+        return JsonResponse(
+            sale,
+            encoder=SaleEncoder,
+            safe=False
+        )
+    except Sale.DoesNotExist:
+        return JsonResponse({"message": "Sale does not exist"})
 
 
 @require_http_methods(["GET"])

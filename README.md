@@ -23,6 +23,10 @@ Inventory
 Sales
 Services
 
+The endpoints to send and view data for the Inventory are accessible through Insomnia.
+
+**M
+
 ## Service microservice
 
 Explain your models and integration with the inventory
