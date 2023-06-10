@@ -20,6 +20,8 @@ Make sure that all Docker containers are running and open a browser to http://lo
 
 **Diagram**
 
+[Link to diagram](https://excalidraw.com/#json=KOlVnXr-hio_isSvlXBrv,SRefxhKvPWfbYjN6WTmxiw)
+
 ## Design
 There are 3 microservices that interact with each other:
 Inventory
@@ -206,20 +208,42 @@ Accessing Endpoints:
 
 1. Follow endpoint: http://localhost:8080/api/technicians/:id/. Make sure to put the id of the specific technician in place of ":id".
 
-2. No need to provide data because this is a GET request. A list of all technicians will be shown.
+2. Sending the DELETE request will will show this kind of response:
 
 	Example:
 ```json
 		{
-			"href": "/api/technicians/2/",
-			"id": 2,
-			"first_name": "Lolly",
-			"last_name": "Pop",
-			"employee_id": "Pink"
-		},
+			"deleted": true
+		}
 ```
 </details>
 
+
+**Appointments**
+| Action | Method | URL
+| ----------- | ----------- | ----------- |
+| List service appointments | GET | http://localhost:8080/api/appointments/
+| Create service appointment | POST | http://localhost:8080/api/appointments/
+| Delete service appointment | DELETE | http://localhost:8080/api/appointments/:id/
+| Finish service appointment | PUT | http://localhost:8080/api/appointments/:id/finish/
+| Cancel service appointment | PUT | http://localhost:8080/api/appointments/:id/cancel/
+
+Accessing Endpoints:
+
+<details>
+<summary> List appointments (GET) </summary>
+
+1. Follow endpoint: http://localhost:8080/api/technicians/:id/. Make sure to put the id of the specific technician in place of ":id".
+
+2. Sending the DELETE request will will show this kind of response:
+
+	Example:
+```json
+		{
+			"deleted": true
+		}
+```
+</details>
 
 ## **Sales microservice**
 
