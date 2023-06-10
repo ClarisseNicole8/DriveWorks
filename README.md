@@ -18,9 +18,9 @@ You may see a warning about an environment variable "OS" being missing if runnin
 
 Make sure that all Docker containers are running and open a browser to http://localhost:3000/
 
-**Diagram** [Link to diagram](https://excalidraw.com/#json=KOlVnXr-hio_isSvlXBrv,SRefxhKvPWfbYjN6WTmxiw)
+### **Diagram**
 
-[Link to diagram](https://excalidraw.com/#json=KOlVnXr-hio_isSvlXBrv,SRefxhKvPWfbYjN6WTmxiw)
+[Link to diagram here](https://excalidraw.com/#json=KOlVnXr-hio_isSvlXBrv,SRefxhKvPWfbYjN6WTmxiw)
 
 ## Design
 There are 3 microservices that interact with each other:
@@ -233,14 +233,115 @@ Accessing Endpoints:
 <details>
 <summary> List appointments (GET) </summary>
 
-1. Follow endpoint: http://localhost:8080/api/technicians/:id/. Make sure to put the id of the specific technician in place of ":id".
+Following the endpoint will result in a list of all service appointments. This format of the list is as shown below.
 
-2. Sending the DELETE request will will show this kind of response:
+	Example:
+```json
+		{
+		"appointments": [
+			{
+				"href": "/api/appointments/14/",
+				"id": 14,
+				"date": "2023-06-16",
+				"time": "12:00:00",
+				"reason": "alignment",
+				"status": "finished",
+				"vin": "34568",
+				"customer": "Customer90",
+				"technician": {
+					"href": "/api/technicians/1/",
+					"id": 1,
+					"first_name": "Cotton",
+					"last_name": "Candy",
+					"employee_id": "Blue"
+				},
+				"vip": false
+			},
+```
+</details>
+
+<details>
+<summary> Create an appointment (POST) </summary>
+
+Create an appointment using the following format. The "id" of each appointment is automatically generated.
+
+	Example:
+```json
+		{
+			"date": "2023-06-16",
+			"time": "12:00:00",
+			"reason": "alignment",
+			"status": "false",
+			"vin": "34568",
+			"customer": "Customer90",
+			"technician": "Blue"
+		}
+```
+</details>
+
+<details>
+<summary> Delete an appointment (DELETE) </summary>
+
+In the correct url, input the "id" of the service appointment that you would like to delete. Sending the request will result in the following confirmation message.
 
 	Example:
 ```json
 		{
 			"deleted": true
+		}
+```
+</details>
+
+<details>
+<summary> Finish an appointment (PUT) </summary>
+
+In the correct url, input the "id" of the service appointment that you would like to be marked as "finish". Sending the request will result in the following response.
+
+	Example:
+```json
+		{
+			"href": "/api/appointments/7/",
+			"id": 7,
+			"date": "2023-06-10",
+			"time": "12:00:00",
+			"reason": "alignment",
+			"status": "finished",
+			"vin": "837IW",
+			"customer": "Customer 2",
+			"technician": {
+				"href": "/api/technicians/1/",
+				"first_name": "Cotton",
+				"last_name": "Candy",
+				"employee_id": "Blue"
+			},
+			"vip": false
+		}
+```
+</details>
+
+<details>
+<summary> Cancel an appointment (PUT) </summary>
+
+In the correct url, input the "id" of the service appointment that you would like to be marked as "cancel". Sending the request will result in the following response.
+
+	Example:
+```json
+		{
+			"href": "/api/appointments/7/",
+			"id": 7,
+			"date": "2023-06-10",
+			"time": "12:00:00",
+			"reason": "alignment",
+			"status": "canceled",
+			"vin": "837IW",
+			"customer": "Customer 2",
+			"technician": {
+				"href": "/api/technicians/1/",
+				"first_name": "Cotton",
+				"last_name": "Candy",
+				"employee_id": "Blue"
+			},
+			"vip": false
 		}
 ```
 </details>

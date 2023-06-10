@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-export default function AppointmentList(props) {
+export default function AppointmentList() {
     const[appointments, setAppointments] = useState([]);
-    console.log(props);
-    function updateVip(appointment) {
-        for (let auto of props) {
-            if (auto.vin === appointment.vin) {
-                return true;
-            }
-        }
-        return false;
-    };
 
     const fetchData = async () => {
         const response = await fetch('http://localhost:8080/api/appointments/');
@@ -57,7 +48,7 @@ export default function AppointmentList(props) {
                         return (
                             <tr key={appointment.id}>
                                 <td>{appointment.vin}</td>
-                                <td>{updateVip(appointment) ? "yes" : "no"}</td>
+                                <td>{appointment.vip ? "yes" : "no"}</td>
                                 <td>{appointment.customer}</td>
                                 <td>{appointment.date}</td>
                                 <td>{appointment.time}</td>

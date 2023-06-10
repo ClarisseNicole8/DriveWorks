@@ -1,72 +1,69 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function ServiceHistory() {
-    const [search, setSearch] = useState('');
-    const [appointments, setAppointments] = useState([]);
-    const [automobiles, setAutomobiles] = useState([]);
+  const [search, setSearch] = useState('');
+  const [appointments, setAppointments] = useState([]);
+  const [automobiles, setAutomobiles] = useState([]);
 
-    const getData = async () => {
-        const response = await fetch('http://localhost:8080/api/appointments/');
-        const data = await response.json();
-        setAppointments(data.appointments)
+  const getData = async () => {
+    // Fetch appointments data
+    const response = await fetch('http://localhost:8080/api/appointments/');
+    if (response.ok) {
+      const data = await response.json();
+      setAppointments(data.appointments);
 
-        if (response.ok) {
-            const data = await response.json();
-            setAppointments(data.appointments);
-
-            for (let appointment of data.appointments){
-                const date = new Date(appointment.date_time).toLocaleDateString();
-                appointment["date"] = date;
-                const time =  new Date(appointment.date_time).toLocaleTimeString();
-                appointment["time"] = time;
-
-        }
+      for (let appointment of data.appointments) {
+        const date = new Date(appointment.date_time).toLocaleDateString();
+        appointment["date"] = date;
+        const time = new Date(appointment.date_time).toLocaleTimeString();
+        appointment["time"] = time;
+      }
     }
 
-        const automobileResponse = fetch('http://localhost:8080/api/automobileVOs/');
+    // Fetch automobile data
+    const automobileResponse = await fetch('http://localhost:8080/api/automobileVOs/');
+    if (automobileResponse.ok) {
+      const automobileData = await automobileResponse.json();
+      setAutomobiles(automobileData.automobileVOs);
+    }
+  };
 
-            if (automobileResponse.ok) {
-                const automobileData = await automobileResponse.json();
-                setAutomobiles(automobileData.automobileVOs);
-            }
-        }
+  useEffect(() => {
+    getData();
+  }, []);
 
-    useEffect(() => {
-        getData()
-    }, [])
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    const searchResponse = await fetch('http://localhost:8080/api/appointments/');
+    if (searchResponse.ok) {
+      const data = await searchResponse.json();
 
-    const handleSearch = async (e) => {
-        e.preventDefault();
-        const searchResponse = await fetch('http://localhost:8080/api/appointments/');
-        if (searchResponse.ok) {
-            const data = await searchResponse.json();
+      for (let appointment of data.appointments) {
+        const date = new Date(appointment.date_time).toLocaleDateString();
+        appointment["date"] = date;
+        const time = new Date(appointment.date_time).toLocaleTimeString();
+        appointment["time"] = time;
+      }
 
-            for (let appointment of data.appointments){
-                const date = new Date(appointment.date_time).toLocaleDateString();
-                appointment["date"] = date;
-                const time =  new Date(appointment.date_time).toLocaleTimeString();
-                appointment["time"] = time;
-        }
-        setAppointments(updatedAppointments => updatedAppointments.filter(appointment => appointment.vin === search));
+      setAppointments(updatedAppointments => updatedAppointments.filter(appointment => appointment.vin === search));
     }
 
     const automobileVOResponse = await fetch('http://localhost:8080/api/automobileVOs');
-        if (automobileVOResponse.ok) {
-            const data = await automobileVOResponse.json();
-        }
-}
-
-    const handleSearchChange = (e) => {
-        const value = e.target.value;
-        setSearch(value)
+    if (automobileVOResponse.ok) {
+      const data = await automobileVOResponse.json();
+      setAutomobiles(data.automobileVOs);
     }
-        let vins = [];
-        {automobiles.map(automobile => {
+  };
 
-            vins.push(automobile.vin)
-        })}
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+  };
 
-
+  let vins = [];
+  if (automobiles) {
+    vins = automobiles.map(automobile => automobile.vin);
+  }
 
     return (
         <div>

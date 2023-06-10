@@ -12,8 +12,6 @@ class AutomobileVOEncoder(ModelEncoder):
     properties = [
         "vin",
         "sold",
-        "color",
-        "year",
         "id"
     ]
 
