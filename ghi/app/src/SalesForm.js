@@ -82,11 +82,15 @@ function SalesForm() {
                             <select onChange={handleAutomobileChange} value={automobile} name="automobile" required id="automobile" className="form-select">
                                 <option value="">Select an automobile</option>
                                 {automobiles.map(automobile => {
+                                    if (!automobile.sold) {
                                     return (
                                         <option key={automobile.vin} value={automobile.vin}>
                                             {automobile.vin}
                                         </option>
                                     );
+                                    } else {
+                                        return null;
+                                    }
                                 })}
                             </select>
                         </div>
