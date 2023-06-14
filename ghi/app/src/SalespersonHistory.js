@@ -6,15 +6,16 @@ function SalespersonHistory() {
     const [sales, setSales] = useState([]);
     const [salesperson, setSalesperson] = useState('');
 
-    const handleSalespersonChange = (event) => {
-        setSalesperson(event.target.value);
+    const handleSalespersonChange = async (event) => {
+        const selectedSalesperson = event.target.value;
+        setSalesperson(selectedSalesperson);
+        const response = await fetch(`http://localhost:8090/api/salesperson/history/${selectedSalesperson}`);
+        if (response.ok) {
+          const data = await response.json();
+          setSales(data.sales);
+        }
     }
     const getData = async () => {
-        const response = await fetch('http://localhost:8090/api/sales/');
-        if (response.ok) {
-            const data = await response.json();
-            setSales(data.sales);
-        }
         const salespeopleResponse = await fetch('http://localhost:8090/api/salespeople/');
         if (salespeopleResponse.ok) {
             const salespeopleData = await salespeopleResponse.json();
