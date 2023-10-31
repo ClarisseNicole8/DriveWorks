@@ -10,9 +10,9 @@ To get started, you will need Docker, GitLab, and Node.js installed.
 Fork and clone the repository to your local device.
 Run the following commands to build and run the project using Docker:
 
-docker volume create beta-data
-docker-compose build
-docker-compose up
+- docker volume create beta-data
+- docker-compose build
+- docker-compose up
 
 You may see a warning about an environment variable "OS" being missing if running this on a Mac. You can safely ignore this.
 
