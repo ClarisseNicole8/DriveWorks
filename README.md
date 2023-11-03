@@ -457,8 +457,8 @@ Return Value upon successful creation of sale:
 		"id": 5
 	},
 	"customer": {
-		"first_name": "Race",
-		"last_name": "Whisenand",
+		"first_name": "John",
+		"last_name": "Doe",
 		"address": "1234 Cooler Street",
 		"phone_number": "555555555",
 		"id": 5
