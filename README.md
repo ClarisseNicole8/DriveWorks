@@ -1,4 +1,4 @@
-# CarCar
+# DriveWorks
 
 ## Team:
 
@@ -7,12 +7,12 @@
 
 ## How to Run this App
 To get started, you will need Docker, GitLab, and Node.js installed.
-Fork and clone the repository to your local device.
+Fork and clone the repository to your local device. 
 Run the following commands to build and run the project using Docker:
 
-docker volume create beta-data
-docker-compose build
-docker-compose up
+- docker volume create beta-data
+- docker-compose build
+- docker-compose up
 
 You may see a warning about an environment variable "OS" being missing if running this on a Mac. You can safely ignore this.
 
@@ -457,8 +457,8 @@ Return Value upon successful creation of sale:
 		"id": 5
 	},
 	"customer": {
-		"first_name": "Race",
-		"last_name": "Whisenand",
+		"first_name": "John",
+		"last_name": "Doe",
 		"address": "1234 Cooler Street",
 		"phone_number": "555555555",
 		"id": 5
