@@ -5,7 +5,7 @@
 * Cindy Lam - Automobile Service
 * Clarisse Alvarez - Automobile Sales
 
-## How to Run this App
+## How to Run this App:
 To get started, you will need Docker, GitLab, and Node.js installed.
 Fork and clone the repository to your local device. 
 Run the following commands to build and run the project using Docker:
