@@ -15,7 +15,7 @@ Run the following commands to build and run the project using Docker:
 
 You may see a warning about an environment variable "OS" being missing if running this on a Mac. You can safely ignore this.
 
-Make sure that all Docker containers are running and open a browser to http://localhost:3000/
+Make sure that all Docker containers are running and open a browser to http://localhost:3000/.
 
 ### **Diagram**
 
